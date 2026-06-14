@@ -1,0 +1,17 @@
+{
+  "name": "Alat Deteksi Dini Kemampuan Komunikasi Batita",
+  "short_name": "Deteksi Batita",
+  "description": "Alat deteksi dini perkembangan kemampuan komunikasi anak batita RSUD Kebayoran Lama",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0d9488",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
