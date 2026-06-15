@@ -7,6 +7,7 @@ import LimitSelect from "@/components/admin/LimitSelect";
 import Pagination from "@/components/admin/Pagination";
 import { useDebounce } from "@/hooks/useDebounce";
 import { healthHistoryService } from "@/services/screeningService";
+import { formatHealthHistoryDisplay } from "@/utils/healthHistory";
 
 export default function AdminHealthHistoriesPage() {
   const [data, setData] = useState([]);
@@ -74,7 +75,9 @@ export default function AdminHealthHistoriesPage() {
                 ].map(([label, value]) => (
                   <div key={label}>
                     <p className="text-xs font-medium text-slate-500">{label}</p>
-                    <p className="mt-0.5 text-slate-700">{value || "-"}</p>
+                    <p className="mt-0.5 text-slate-700">
+                      {formatHealthHistoryDisplay(value)}
+                    </p>
                   </div>
                 ))}
               </div>

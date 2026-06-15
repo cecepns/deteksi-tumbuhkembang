@@ -2,25 +2,23 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FileHeart, Save, ArrowRight } from "lucide-react";
-import FormField from "@/components/ui/FormField";
+import CheckboxGroup from "@/components/forms/CheckboxGroup";
 import EmptyState from "@/components/ui/EmptyState";
 import { useScreening } from "@/context/ScreeningContext";
 import { healthHistoryService } from "@/services/screeningService";
-
-const initialForm = {
-  riwayat_ibu_hamil: "",
-  riwayat_anak_kandungan: "",
-  riwayat_saat_lahir: "",
-  riwayat_setelah_lahir: "",
-  riwayat_motorik: "",
-};
+import { HEALTH_HISTORY_SECTIONS } from "@/data/healthHistoryOptions";
+import {
+  getInitialHealthHistoryForm,
+  serializeHealthHistoryForm,
+  toggleHealthHistoryOption,
+} from "@/utils/healthHistory";
 
 export default function RiwayatKesehatanPage() {
   const { session, setHealthHistory } = useScreening();
-  const [form, setForm] = useState(() => ({
-    ...initialForm,
-    ...(session.healthHistory || {}),
-  }));
+  const [form, setForm] = useState(() =>
+    getInitialHealthHistoryForm(session.healthHistory || {})
+  );
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   if (!session.profile) {
@@ -42,17 +40,37 @@ export default function RiwayatKesehatanPage() {
     );
   }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+  const handleCheckboxChange = (name, option, hasTidakAda) => {
+    setForm((prev) => ({
+      ...prev,
+      [name]: toggleHealthHistoryOption(prev[name] || [], option, hasTidakAda),
+    }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    HEALTH_HISTORY_SECTIONS.forEach((section) => {
+      if (section.required && (!form[section.key] || form[section.key].length === 0)) {
+        newErrors[section.key] = "Pilih minimal satu opsi";
+      }
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) {
+      toast.error("Lengkapi semua bagian riwayat kesehatan");
+      return;
+    }
+
     setLoading(true);
+    const serialized = serializeHealthHistoryForm(form);
     const payload = {
       child_profile_id: session.profile.id,
-      ...form,
+      ...serialized,
     };
 
     try {
@@ -81,47 +99,29 @@ export default function RiwayatKesehatanPage() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-        <FormField
-          label="Riwayat Kesehatan Ibu Saat Mengandung"
-          name="riwayat_ibu_hamil"
-          value={form.riwayat_ibu_hamil}
-          onChange={handleChange}
-          rows={3}
-          placeholder="Contoh: kehamilan normal, ada komplikasi, dll."
-        />
-        <FormField
-          label="Riwayat Kesehatan Anak di Kandungan"
-          name="riwayat_anak_kandungan"
-          value={form.riwayat_anak_kandungan}
-          onChange={handleChange}
-          rows={3}
-          placeholder="Contoh: hasil USG, gerakan janin, dll."
-        />
-        <FormField
-          label="Riwayat Kesehatan Anak Saat Dilahirkan"
-          name="riwayat_saat_lahir"
-          value={form.riwayat_saat_lahir}
-          onChange={handleChange}
-          rows={3}
-          placeholder="Contoh: berat lahir, APGAR score, cara persalinan, dll."
-        />
-        <FormField
-          label="Riwayat Kesehatan Anak Setelah Lahir"
-          name="riwayat_setelah_lahir"
-          value={form.riwayat_setelah_lahir}
-          onChange={handleChange}
-          rows={3}
-          placeholder="Contoh: pernah dirawat, operasi, penyakit, dll."
-        />
-        <FormField
-          label="Riwayat Perkembangan Motorik"
-          name="riwayat_motorik"
-          value={form.riwayat_motorik}
-          onChange={handleChange}
-          rows={3}
-          placeholder="Contoh: kapan tengkurap, duduk, merangkak, berjalan, dll."
-        />
+      <div className="mb-6 rounded-xl bg-blue-50 px-4 py-3 text-sm text-blue-800">
+        Centang (<strong>✓</strong>) kondisi yang sesuai. Pilih <strong>Tidak ada</strong> jika tidak
+        ada riwayat pada bagian tersebut.
+      </div>
+
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-8 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm"
+      >
+        {HEALTH_HISTORY_SECTIONS.map((section) => (
+          <CheckboxGroup
+            key={section.key}
+            label={section.label}
+            name={section.key}
+            options={section.options}
+            value={form[section.key] || []}
+            onChange={handleCheckboxChange}
+            required={section.required}
+            hint={section.hint}
+            hasTidakAda={section.hasTidakAda}
+            error={errors[section.key]}
+          />
+        ))}
 
         <div className="flex flex-wrap gap-3 pt-2">
           <button
