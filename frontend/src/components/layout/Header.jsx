@@ -1,8 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Heart } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { NAV_ITEMS } from "@/data/content";
 import { useAppSettings } from "@/hooks/useAppSettings";
+import RsudLogo from "@/components/ui/RsudLogo";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,8 +14,8 @@ export default function Header() {
     <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link to="/" className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-600 text-white shadow-sm">
-            <Heart className="h-6 w-6" />
+          <div className="flex h-16 w-auto items-center justify-center rounded-xl bg-white p-1 shadow-sm ring-1 ring-slate-200">
+            <RsudLogo className="h-full w-full" />
           </div>
           <div className="hidden sm:block">
             <p className="text-xs font-medium text-primary-700">{settings.rs_name}</p>

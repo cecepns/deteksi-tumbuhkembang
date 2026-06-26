@@ -33,7 +33,7 @@ export default function KontakPage() {
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Kontak Konsultasi</h1>
           <p className="text-sm text-slate-500">
-            Pendaftaran layanan DSA dan terapi wicara
+            Pendaftaran layanan dokter spesialis anak dan terapi wicara
           </p>
         </div>
       </div>
@@ -48,7 +48,7 @@ export default function KontakPage() {
             <div>
               <p className="font-medium text-slate-700">Alamat</p>
               <p className="text-sm text-slate-500">
-                Jl. Ciputat Raya No. 7, Kebayoran Lama, Jakarta Selatan
+                Jl. Jatay RT.001 RW 012, Kel. Kebayoran Lama Selatan, Kec. Kebayoran Lama, Kota Jakarta Selatan 12240
               </p>
             </div>
           </div>
@@ -71,19 +71,19 @@ export default function KontakPage() {
           <div className="rounded-xl bg-primary-50 p-4">
             <div className="flex items-center gap-2 text-primary-700">
               <Stethoscope className="h-5 w-5" />
-              <h3 className="font-semibold">Layanan DSA</h3>
+              <h3 className="font-semibold">Layanan Dokter Spesialis Anak</h3>
             </div>
             <p className="mt-2 text-sm text-slate-600">
-              Deteksi Dini Autisme — skrining dan evaluasi perkembangan anak oleh tenaga kesehatan terlatih.
+              Solusi kesehatan menyeluruh untuk buah hati Anda, mulai dari pemantauan tumbuh kembang, imunisasi, hingga penanganan medis anak oleh tim dokter ahli yang tepercaya dan ramah anak.
             </p>
           </div>
           <div className="rounded-xl bg-teal-50 p-4">
             <div className="flex items-center gap-2 text-teal-700">
               <MessageCircle className="h-5 w-5" />
-              <h3 className="font-semibold">Terapi Wicara</h3>
+              <h3 className="font-semibold">Layanan Terapi Wicara</h3>
             </div>
             <p className="mt-2 text-sm text-slate-600">
-              Layanan terapi wicara untuk anak dengan keterlambatan perkembangan komunikasi dan bahasa.
+              Layanan stimulasi dan rehabilitasi khusus anak untuk mengatasi gangguan bicara, keterlambatan bahasa (speech delay), gangguan artikulasi, serta kesulitan makan dan menelan demi mendukung tumbuh kembang anak yang optimal.
             </p>
           </div>
         </div>

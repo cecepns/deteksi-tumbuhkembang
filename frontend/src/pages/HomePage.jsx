@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useAppSettings } from "@/hooks/useAppSettings";
+import RsudLogo from "@/components/ui/RsudLogo";
 import heroImage from "@/assets/hero.png";
 
 export default function HomePage() {
@@ -17,7 +18,7 @@ export default function HomePage() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-20">
           <div>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm backdrop-blur">
-              <Shield className="h-4 w-4" />
+              <RsudLogo className="h-8 w-auto rounded bg-white p-0.5" />
               {settings.rs_name}
             </div>
             <h1 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
