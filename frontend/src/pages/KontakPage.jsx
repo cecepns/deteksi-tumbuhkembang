@@ -48,7 +48,7 @@ export default function KontakPage() {
             <div>
               <p className="font-medium text-slate-700">Alamat</p>
               <p className="text-sm text-slate-500">
-                Jl. Jatay RT.001 RW 012, Kel. Kebayoran Lama Selatan, Kec. Kebayoran Lama, Kota Jakarta Selatan 12240
+                Jl. Jatayu RT.001 RW.012, Kel. Kebayoran Lama Selatan, Kec. Kebayoran Lama, Kota Jakarta Selatan 12240
               </p>
             </div>
           </div>
