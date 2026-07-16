@@ -65,7 +65,7 @@ export default function AdminScreeningPage() {
                   <th className="px-4 py-3 font-medium">Skor</th>
                   <th className="px-4 py-3 font-medium">Status</th>
                   <th className="px-4 py-3 font-medium">Item</th>
-                  <th className="px-4 py-3 font-medium">Tanggal</th>
+                  <th className="px-4 py-3 font-medium">Tanggal Screening</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -90,7 +90,7 @@ export default function AdminScreeningPage() {
                       {row.checked_items}/{row.total_items}
                     </td>
                     <td className="px-4 py-3 text-slate-500">
-                      {row.tanggal_screening ? new Date(row.tanggal_screening).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' }) : new Date(row.created_at).toLocaleString("id-ID")}
+                      {row.tanggal_screening ? new Date(row.tanggal_screening).toLocaleDateString("id-ID", { day: 'numeric', month: 'long', year: 'numeric' }) : "-"}
                     </td>
                   </tr>
                 ))}
