@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS screening_results (
   id INT AUTO_INCREMENT PRIMARY KEY,
   child_profile_id INT NOT NULL,
   kelompok_usia VARCHAR(20) NOT NULL,
+  tanggal_screening DATE NOT NULL,
   checklist_answers JSON NOT NULL,
   total_items INT NOT NULL,
   checked_items INT NOT NULL,

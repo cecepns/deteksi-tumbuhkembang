@@ -90,7 +90,7 @@ export default function AdminScreeningPage() {
                       {row.checked_items}/{row.total_items}
                     </td>
                     <td className="px-4 py-3 text-slate-500">
-                      {new Date(row.created_at).toLocaleString("id-ID")}
+                      {row.tanggal_screening ? new Date(row.tanggal_screening).toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' }) : new Date(row.created_at).toLocaleString("id-ID")}
                     </td>
                   </tr>
                 ))}

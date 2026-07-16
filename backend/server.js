@@ -381,7 +381,7 @@ app.get("/api/screening-results", authMiddleware, async (req, res) => {
       params
     );
     const [rows] = await pool.query(
-      `SELECT s.*, c.nama_lengkap, c.nama_panggilan, c.usia_bulan
+      `SELECT s.*, c.nama_lengkap, c.nama_panggilan, c.usia_bulan, DATE_FORMAT(s.tanggal_screening, '%Y-%m-%d') as tanggal_screening
        FROM screening_results s
        LEFT JOIN child_profiles c ON c.id = s.child_profile_id
        ${where} ORDER BY ${sortCol} ${order} LIMIT ? OFFSET ?`,
@@ -399,6 +399,7 @@ app.post("/api/screening-results", async (req, res) => {
     const {
       child_profile_id,
       kelompok_usia,
+      tanggal_screening,
       checklist_answers,
       total_items,
       checked_items,
@@ -408,17 +409,18 @@ app.post("/api/screening-results", async (req, res) => {
       rekomendasi_konsultasi,
     } = req.body;
 
-    if (!child_profile_id || !kelompok_usia || !checklist_answers) {
+    if (!child_profile_id || !kelompok_usia || !checklist_answers || !tanggal_screening) {
       return res.status(400).json({ success: false, message: "Data skrining belum lengkap" });
     }
 
     const [result] = await pool.query(
       `INSERT INTO screening_results
-        (child_profile_id, kelompok_usia, checklist_answers, total_items, checked_items, score, status, rekomendasi_stimulasi, rekomendasi_konsultasi)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        (child_profile_id, kelompok_usia, tanggal_screening, checklist_answers, total_items, checked_items, score, status, rekomendasi_stimulasi, rekomendasi_konsultasi)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         child_profile_id,
         kelompok_usia,
+        tanggal_screening,
         JSON.stringify(checklist_answers),
         total_items,
         checked_items,

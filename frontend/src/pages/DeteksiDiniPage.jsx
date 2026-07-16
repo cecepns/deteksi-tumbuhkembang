@@ -21,6 +21,12 @@ export default function DeteksiDiniPage() {
     if (session.screening?.answers) return session.screening.answers;
     return items.map(() => false);
   });
+  const [tanggalScreening, setTanggalScreening] = useState(() => {
+    const today = new Date();
+    // Use local timezone to get YYYY-MM-DD
+    const offset = today.getTimezoneOffset() * 60000;
+    return new Date(today.getTime() - offset).toISOString().split('T')[0];
+  });
   const [loading, setLoading] = useState(false);
 
   if (!session.profile) {
@@ -78,6 +84,7 @@ export default function DeteksiDiniPage() {
     const screeningData = {
       child_profile_id: session.profile.id,
       kelompok_usia: kelompokUsia,
+      tanggal_screening: tanggalScreening,
       checklist_answers: items.map((item, i) => ({
         item,
         checked: answers[i],
@@ -126,6 +133,20 @@ export default function DeteksiDiniPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-3">
+        <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-4">
+          <label className="mb-2 block text-sm font-semibold text-slate-700">
+            Tanggal Pengisian (Screening) <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="date"
+            required
+            value={tanggalScreening}
+            onChange={(e) => setTanggalScreening(e.target.value)}
+            max={new Date().toISOString().split("T")[0]}
+            className="w-full rounded-xl border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-1 focus:ring-primary-500"
+          />
+        </div>
+
         {items.map((item, index) => (
           <label
             key={index}
